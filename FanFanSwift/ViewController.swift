@@ -130,10 +130,10 @@ class ViewController: UIViewController {
     {
         let path = Bundle.main.path(forResource: name,ofType: "mp3")
         let url = URL(fileURLWithPath: path!)
-        let player = try? AVAudioPlayer(contentsOf: url)
-        player?.prepareToPlay()
-        player?.volume = 0.9
-        return player!
+        let playefr = try? AVAudioPlayer(contentsOf: url)
+        playefr?.prepareToPlay()
+        playefr?.volume = 0.9
+        return playefr!
     }
     func prepareMusic()
     {
@@ -177,7 +177,7 @@ class ViewController: UIViewController {
     }
     func timeCount()
     {
-        var timeCount :Int = (self.timeCountLabel!.text?.characters.count)!
+        var timeCount :Int = (self.timeCountLabel!.text! as NSString).integerValue//(self.timeCountLabel!.text?.characters.count)!
         if(timeCount<=0)
         {
             self.timer.invalidate()
