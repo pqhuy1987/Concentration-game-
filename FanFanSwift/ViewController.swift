@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     func randomTags()->NSArray
     {
         let mArr:NSMutableArray =  NSMutableArray()
-        var count = 0
+        _ = 0
         while(mArr.count < 20)
         {
             let tag = arc4random()%20+100
@@ -113,7 +113,7 @@ class ViewController: UIViewController {
         print("turnAll2Left")
         for i in 100...119
         {
-            var myI  = self.view.viewWithTag(i) as! MyImageView
+            let myI  = self.view.viewWithTag(i) as! MyImageView
             myI.turn2Left()
         }
     }
@@ -122,7 +122,7 @@ class ViewController: UIViewController {
         print("turnAll2Right")
         for i in 100...119
         {
-            var myI  = self.view.viewWithTag(i) as! MyImageView
+            let myI  = self.view.viewWithTag(i) as! MyImageView
             myI.turn2Right()
         }
     }
@@ -130,10 +130,10 @@ class ViewController: UIViewController {
     {
         let path = Bundle.main.path(forResource: name,ofType: "mp3")
         let url = URL(fileURLWithPath: path!)
-        var player = AVAudioPlayer(contentsOfURL: url,error: nil)
-        player.prepareToPlay()
-        player.volume = 0.9
-        return player
+        let player = try? AVAudioPlayer(contentsOf: url)
+        player?.prepareToPlay()
+        player?.volume = 0.9
+        return player!
     }
     func prepareMusic()
     {
@@ -154,7 +154,7 @@ class ViewController: UIViewController {
             let image = UIImage(named: str)
             images.add(image!)
         }
-        self.birdView!.animationImages = images as [AnyObject] as [AnyObject]
+        self.birdView!.animationImages = (images as AnyObject) as? [UIImage]
         self.birdView!.animationDuration = 1.2
     }
     func prepareTimeCount()
@@ -170,14 +170,14 @@ class ViewController: UIViewController {
             images.add(image!)
         }
         
-        self.congratulationView!.animationImages = images as [AnyObject] as [AnyObject]
+        self.congratulationView!.animationImages = (images as AnyObject) as? [UIImage]
         self.congratulationView!.animationDuration = 3
         self.congratulationView!.startAnimating()
         self.view.addSubview(self.congratulationView!)
     }
     func timeCount()
     {
-        var timeCount :Int = self.timeCountLabel!.text!.toInt()!
+        var timeCount :Int = (self.timeCountLabel!.text?.characters.count)!
         if(timeCount<=0)
         {
             self.timer.invalidate()
@@ -222,10 +222,10 @@ class ViewController: UIViewController {
     }
      func touchesBegan(_ touches: Set<NSObject>, with event: UIEvent!)
     {
-        var touch :UITouch =  touches.first as! UITouch
-        if(touch.view.isKindOfClass(MyImageView.self))
+        let touch :UITouch =  touches.first as! UITouch
+        if(touch.view?.isKind(of: MyImageView.self))!
         {
-            var currentTouchView = touch.view as! MyImageView
+            let currentTouchView = touch.view as! MyImageView
             currentTouchView.turn2Left()
             self.clickPlayer.play()
             if (self.tempImageView == nil)
